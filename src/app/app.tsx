@@ -1,7 +1,7 @@
 import Footer from "components/Footer/Footer";
 import Header from "components/Header/Header";
 import Loading from "components/Loading/Loading.tsx";
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useQuery } from "react-query";
 
 type Character = {
@@ -15,16 +15,13 @@ type Character = {
 	gender: string;
 };
 
-const fetchCharacters = async (page: number) => {
-	const response = await fetch(
-		`https://rickandmortyapi.com/api/character?page=${page}`
-	);
-	const data = await response.json();
-	return data;
-};
-
 const App = () => {
 	const [page, setPage] = useState<number>(1);
+
+	const [allCharacters, setAllCharacters] = useState<Character[]>([]);
+	const [charactersPerPage, setCharactersPerPage] = useState<number>(20);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [maxCharactersPerPage, setMaxCharactersPerPage] = useState<number>(20);
 
 	const [sortBy, setSortBy] = useState<string>("Default");
 	const [filterBy, setFilterBy] = useState<string[]>([]);
@@ -33,13 +30,60 @@ const App = () => {
 	const [openFilter, setOpenFilter] = useState<boolean>(false);
 	const [advancedSearch, setAdvancedSearch] = useState<boolean>(false);
 
+	useEffect(() => {
+		const fetchAllCharacters = async () => {
+			let currentPage = 1;
+			let totalPages = 1;
+			let characters: Character[] = [];
+
+			while (currentPage <= totalPages) {
+				const response = await fetch(
+					`https://rickandmortyapi.com/api/character?page=${currentPage}`
+				);
+				const data = await response.json();
+				characters = [...characters, ...data.results];
+				totalPages = data.info.pages;
+				currentPage++;
+			}
+
+			setAllCharacters(characters);
+		};
+
+		fetchAllCharacters();
+	}, []);
+
+	useEffect(() => {
+		const storedSearchQuery = localStorage.getItem("searchQuery");
+		if (storedSearchQuery !== null) {
+			setSearchQuery(storedSearchQuery);
+		}
+		setCharactersPerPage(maxCharactersPerPage);
+	}, [page]);
+
+	useEffect(() => {
+		localStorage.setItem("searchQuery", searchQuery);
+	}, [searchQuery]);
+
+	const loadMoreCharacters = () => {
+		setCharactersPerPage((prev) => prev + maxCharactersPerPage);
+	};
+
+	const fetchCharacters = async (page: number = 1) => {
+		const response = await fetch(
+			`https://rickandmortyapi.com/api/character?page=${page}`
+		);
+		const data = await response.json();
+
+		return data;
+	};
+
 	const { isLoading, error, data } = useQuery(["characters", page], () =>
 		fetchCharacters(page)
 	);
 	if (isLoading) return <Loading />;
 	if (error) return <h3>Error</h3>;
 
-	const characters: Character[] = data.results;
+	const characters: Character[] = allCharacters;
 
 	const filteredCharacters = characters.filter((character) => {
 		if (filterBy.length === 0) return true;
@@ -69,8 +113,10 @@ const App = () => {
 	const startIndex: number = page - 1;
 	const charactersToShow: Character[] = searchFilteredCharacters.slice(
 		startIndex,
-		startIndex + 20
+		startIndex + charactersPerPage
 	);
+
+	console.log(charactersToShow.length);
 
 	const characterStatus = (status: string) => {
 		switch (status) {
@@ -233,6 +279,13 @@ const App = () => {
 							))
 						)}
 					</ul>
+					{charactersToShow.length < searchFilteredCharacters.length && (
+						<div className="flex justify-center mt-4 gap-4">
+							<button type="button" onClick={loadMoreCharacters}>
+								Load More
+							</button>
+						</div>
+					)}
 				</section>
 				<div className="flex justify-center mt-4 gap-4">
 					<button
@@ -246,7 +299,7 @@ const App = () => {
 					<button
 						type="button"
 						onClick={() => setPage(page + 1)}
-						disabled={page === pageSize || charactersToShow.length < 20}
+						disabled={page === pageSize}
 					>
 						Next Page
 					</button>
