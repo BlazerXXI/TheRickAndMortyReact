@@ -18,11 +18,6 @@ type Character = {
 const App = () => {
 	const [page, setPage] = useState<number>(1);
 
-	const [allCharacters, setAllCharacters] = useState<Character[]>([]);
-	const [charactersPerPage, setCharactersPerPage] = useState<number>(20);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [maxCharactersPerPage, setMaxCharactersPerPage] = useState<number>(20);
-
 	const [sortBy, setSortBy] = useState<string>("Default");
 	const [filterBy, setFilterBy] = useState<string[]>([]);
 	const [searchQuery, setSearchQuery] = useState<string>("");
@@ -31,42 +26,15 @@ const App = () => {
 	const [advancedSearch, setAdvancedSearch] = useState<boolean>(false);
 
 	useEffect(() => {
-		const fetchAllCharacters = async () => {
-			let currentPage = 1;
-			let totalPages = 1;
-			let characters: Character[] = [];
-
-			while (currentPage <= totalPages) {
-				const response = await fetch(
-					`https://rickandmortyapi.com/api/character?page=${currentPage}`
-				);
-				const data = await response.json();
-				characters = [...characters, ...data.results];
-				totalPages = data.info.pages;
-				currentPage++;
-			}
-
-			setAllCharacters(characters);
-		};
-
-		fetchAllCharacters();
-	}, []);
-
-	useEffect(() => {
 		const storedSearchQuery = localStorage.getItem("searchQuery");
 		if (storedSearchQuery !== null) {
 			setSearchQuery(storedSearchQuery);
 		}
-		setCharactersPerPage(maxCharactersPerPage);
 	}, [page]);
 
 	useEffect(() => {
 		localStorage.setItem("searchQuery", searchQuery);
 	}, [searchQuery]);
-
-	const loadMoreCharacters = () => {
-		setCharactersPerPage((prev) => prev + maxCharactersPerPage);
-	};
 
 	const fetchCharacters = async (page: number = 1) => {
 		const response = await fetch(
@@ -83,7 +51,7 @@ const App = () => {
 	if (isLoading) return <Loading />;
 	if (error) return <h3>Error</h3>;
 
-	const characters: Character[] = allCharacters;
+	const characters: Character[] = data.results;
 
 	const filteredCharacters = characters.filter((character) => {
 		if (filterBy.length === 0) return true;
@@ -110,13 +78,7 @@ const App = () => {
 	});
 
 	const pageSize: number = data.info.pages;
-	const startIndex: number = page - 1;
-	const charactersToShow: Character[] = searchFilteredCharacters.slice(
-		startIndex,
-		startIndex + charactersPerPage
-	);
-
-	console.log(charactersToShow.length);
+	const charactersToShow: Character[] = searchFilteredCharacters;
 
 	const characterStatus = (status: string) => {
 		switch (status) {
@@ -279,13 +241,6 @@ const App = () => {
 							))
 						)}
 					</ul>
-					{charactersToShow.length < searchFilteredCharacters.length && (
-						<div className="flex justify-center mt-4 gap-4">
-							<button type="button" onClick={loadMoreCharacters}>
-								Load More
-							</button>
-						</div>
-					)}
 				</section>
 				<div className="flex justify-center mt-4 gap-4">
 					<button
