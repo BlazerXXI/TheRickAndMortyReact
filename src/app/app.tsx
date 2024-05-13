@@ -195,6 +195,8 @@ const App = () => {
 										height={"auto"}
 										src={`https://rickandmortyapi.com/api/character/avatar/${character.id}.jpeg`}
 										className="flex-[2_1_0%] rounded-lg cursor-pointer"
+										// TODO: add modal window
+										// Modal view of details of a specific character
 									/>
 									<div className="flex-[3_1_0%] p-4 flex flex-col justify-between gap-5">
 										<div>
