@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	background-color: #272b33;
+	font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto",
+		"Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol";
+	font-weight: 500;
+	font-size: 16px;
+}
+
+a {
+	transition: all 0.3s ease 0s;
+}
+button:hover:not(:disabled),
+a:hover {
+	opacity: 0.8;
+}
+button:hover:not(:disabled),
+a:active {
+	opacity: 0.6;
+	transform: scale(0.95);
+}
+
+button {
+	transition: all 0.3s ease 0s;
+}
+button:disabled {
+	opacity: 0.3;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-position: center center;
+	object-fit: cover;
+}
+
+li a:hover {
+	color: #ff9800;
+	opacity: 1;
+}
+
+select,
+input[type="text"] {
+	appearance: none;
+	background-color: transparent;
+	border-radius: 99999px;
+	cursor: pointer;
+}
+select > * {
+	background-color: #3c3e44;
+}
