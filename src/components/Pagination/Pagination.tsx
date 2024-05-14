@@ -15,7 +15,10 @@ const Pagination = (props: IPagination) => {
 			<p className="text-[20px] text-gray-300/60">{page}</p>
 			<button
 				type="button"
-				onClick={() => setPage(page + 1)}
+				onClick={() => {
+					setPage(page + 1);
+					window.scrollTo({ top: 0, behavior: "smooth" });
+				}}
 				disabled={page === pageSize}
 			>
 				Next Page

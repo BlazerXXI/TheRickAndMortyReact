@@ -27,7 +27,9 @@ const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
 				/>
 				<div className="flex-[3_1_0%] p-4 flex flex-col justify-between gap-5">
 					<div>
-						<h2 className="text-[1.25rem] font-extrabold transition-all">{character.name}</h2>
+						<h2 className="text-[1.25rem] font-extrabold transition-all">
+							{character.name}
+						</h2>
 						<h3 className="flex items-center">
 							<span
 								style={{

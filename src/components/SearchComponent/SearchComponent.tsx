@@ -1,6 +1,6 @@
-import { ISearchComponent } from "src/types/types";
+import {  ISearch } from "src/types/types";
 
-const SearchComponent = (props: ISearchComponent) => {
+const SearchComponent = (props:  ISearch) => {
 	const { searchQuery, setSearchQuery, advancedSearch, setAdvancedSearch } =
 		props;
 

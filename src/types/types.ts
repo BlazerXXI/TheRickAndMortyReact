@@ -36,7 +36,7 @@ export interface IFooter {
 	pageSize: number;
 }
 
-export interface ISearchComponent {
+export interface  ISearch {
 	searchQuery: string;
 	setSearchQuery: (value: string) => void;
 	advancedSearch: boolean;
