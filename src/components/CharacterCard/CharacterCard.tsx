@@ -14,7 +14,8 @@ const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
 		<>
 			<li
 				key={character.id}
-				className="flex flex-col md:flex-row w-full hover:scale-[1.01] transition duration-300 bg-[#3c3e44] m-[.75rem] shadow-md rounded-lg"
+				className="flex flex-col md:flex-row max-w-[500px] w-full cursor-pointer hover:scale-[1.01] transition duration-300 bg-[#3c3e44] m-[.75rem] shadow-md rounded-lg"
+				onClick={toggleModal}
 			>
 				<img
 					alt={character.name}
@@ -23,15 +24,10 @@ const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
 					height={"auto"}
 					src={`https://rickandmortyapi.com/api/character/avatar/${character.id}.jpeg`}
 					className="flex-[2_1_0%] rounded-lg cursor-pointer"
-					onClick={toggleModal}
 				/>
 				<div className="flex-[3_1_0%] p-4 flex flex-col justify-between gap-5">
 					<div>
-						<a href={character.url}>
-							<h2 className="text-[1.25rem] font-extrabold">
-								{character.name}
-							</h2>
-						</a>
+						<h2 className="text-[1.25rem] font-extrabold transition-all">{character.name}</h2>
 						<h3 className="flex items-center">
 							<span
 								style={{
