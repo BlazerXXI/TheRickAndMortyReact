@@ -111,6 +111,7 @@ const App = () => {
 						<input
 							className="w-full"
 							type="text"
+							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							title="Search"
 							placeholder="Search"
