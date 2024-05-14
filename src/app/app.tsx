@@ -141,9 +141,8 @@ const App = () => {
 						<CharacterList characters={charactersToShow} />
 					)}
 				</section>
-				<Pagination page={page} setPage={setPage} pageSize={pageSize} />
 			</main>
-			<Footer />
+			<Footer page={page} setPage={setPage} pageSize={pageSize} />
 		</>
 	);
 };

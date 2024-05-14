@@ -1,7 +1,11 @@
-const Footer = () => {
+import Pagination from "components/Pagination/Pagination";
+
+const Footer = (props) => {
+	const { page, setPage, pageSize } = props;
+
 	return (
 		<footer>
-			<p>Footer</p>
+			<Pagination page={page} setPage={setPage} pageSize={pageSize} />
 		</footer>
 	);
 };
