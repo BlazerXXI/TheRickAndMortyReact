@@ -180,7 +180,9 @@ const App = () => {
 						{charactersToShow.length === 0 ? (
 							<li>
 								<p className="text-white text-center font-bold ">
-									No characters found
+									No characters found on this page.
+									<br />
+									Please, select a different page
 								</p>
 							</li>
 						) : (
