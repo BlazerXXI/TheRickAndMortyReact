@@ -6,6 +6,7 @@ const FilterComponent = (props: IFilter) => {
 	return (
 		<>
 			<button
+				id="filterButton"
 				title="Filter by status"
 				className="border-[#3c3e44] border-[2px] rounded-full p-2 basis-1/2"
 				type="button"

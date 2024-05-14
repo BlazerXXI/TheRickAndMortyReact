@@ -86,6 +86,20 @@ export const useCharacterData = () => {
 		}
 	};
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				openFilter &&
+				event.target !== document.querySelector("#filter") &&
+				event.target !== document.querySelector("#filterButton")
+			) {
+				setOpenFilter(false);
+			}
+		};
+		document.addEventListener("click", handleClickOutside);
+		return () => document.removeEventListener("click", handleClickOutside);
+	}, [openFilter]);
+
 	return {
 		page,
 		setPage,
