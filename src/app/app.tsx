@@ -182,7 +182,7 @@ const App = () => {
 								<p className="text-white text-center font-bold ">
 									No characters found on this page.
 									<br />
-									Please, select a different page
+									Please select another page
 								</p>
 							</li>
 						) : (
