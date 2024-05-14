@@ -1,6 +1,6 @@
-import React from "react";
+import { IBar } from "src/types/types";
 
-const Bar = (props) => {
+const Bar = (props: IBar) => {
 	const {
 		sortBy,
 		setSortBy,

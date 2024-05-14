@@ -32,7 +32,6 @@ const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
 								{character.name}
 							</h2>
 						</a>
-						<p className="text-[#9e9e9e]">Gender - {character.gender}</p>
 						<h3 className="flex items-center">
 							<span
 								style={{
@@ -43,25 +42,11 @@ const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
 							{character.status} - {character.species}
 						</h3>
 					</div>
-					<div>
-						<p className="text-[#9e9e9e]">Last known location:</p>
-						{character.origin.name !== "unknown" ? (
-							<a href={character.origin.url}>
-								<h2>{character.origin.name}</h2>
-							</a>
-						) : (
-							<span className="text-red-700 font-bold animate-pulse text-[20px]">
-								<h2>Information is not available</h2>
-							</span>
-						)}
-					</div>
-					<div>
-						<p className="text-[#9e9e9e]">First seen in:</p>
-						<a href={character.location.url}>{character.location.name}</a>
-					</div>
 				</div>
 			</li>
-			{isModalOpen && <CharacterModal character={character} />}
+			{isModalOpen && (
+				<CharacterModal character={character} toggleModal={toggleModal} />
+			)}
 		</>
 	);
 };

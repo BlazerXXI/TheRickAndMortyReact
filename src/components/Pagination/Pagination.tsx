@@ -1,4 +1,6 @@
-const Pagination = (props) => {
+import { IPagination } from "src/types/types";
+
+const Pagination = (props: IPagination) => {
 	const { page, setPage, pageSize } = props;
 
 	return (
