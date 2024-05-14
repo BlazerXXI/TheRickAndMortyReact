@@ -35,3 +35,22 @@ export interface IFooter {
 	setPage: (value: number) => void;
 	pageSize: number;
 }
+
+export interface ISearchComponent {
+	searchQuery: string;
+	setSearchQuery: (value: string) => void;
+	advancedSearch: boolean;
+	setAdvancedSearch: (value: boolean) => void;
+}
+
+export interface IFilter {
+	filterBy: string[];
+	handleFilterByChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	openFilter: boolean;
+	setOpenFilter: (value: boolean) => void;
+}
+
+export interface ISort {
+	sortBy: string;
+	setSortBy: (value: string) => void;
+}
