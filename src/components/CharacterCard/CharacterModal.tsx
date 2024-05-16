@@ -55,24 +55,20 @@ const CharacterModal = (props: {
 						</div>
 						<div className="mt-5">
 							<div className="grid grid-cols-1 gap-2">
-								<h4 className="text-base font-medium text-gray-900">
-									Name: {character.name}
-								</h4>
-								<h4 className="text-base font-medium text-gray-900">
-									Species: {character.species}
-								</h4>
-								<h4 className="text-base font-medium text-gray-900">
-									Status: {character.status}
-								</h4>
-								<h4 className="text-base font-medium text-gray-900">
-									Gender: {character.gender}
-								</h4>
-								<h4 className="text-base font-medium text-gray-900">
-									Origin: {character.origin.name}
-								</h4>
-								<h4 className="text-base font-medium text-gray-900">
-									Location: {character.location.name}
-								</h4>
+								{Object.entries(character).map(([key, value]) => (
+									<div
+										key={key}
+										className="text-base font-medium text-gray-900"
+									>
+										{(value && key === "origin") || key === "location"
+											? `${key.charAt(0).toUpperCase() + key.slice(1)}: ${
+													value.name
+											  }`
+											: `${
+													key.charAt(0).toUpperCase() + key.slice(1)
+											  }: ${value}`}
+									</div>
+								))}
 							</div>
 							<div className="mt-4">
 								<button
