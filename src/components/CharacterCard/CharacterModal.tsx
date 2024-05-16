@@ -60,7 +60,7 @@ const CharacterModal = (props: {
 										key={key}
 										className="text-base font-medium text-gray-900"
 									>
-										{(value && key === "origin") || key === "location"
+										{(value && (key === "origin" || key === "location"))
 											? `${key.charAt(0).toUpperCase() + key.slice(1)}: ${
 													value.name
 											  }`
