@@ -1,4 +1,4 @@
-import { Character } from "src/types/types";
+import { Character } from "src/types/types"; // Corrected import path
 
 const CharacterModal = (props: {
 	character: Character;
@@ -22,62 +22,44 @@ const CharacterModal = (props: {
 					aria-labelledby="modal-title"
 					id="modal-content"
 				>
+					<button
+						title="Close modal"
+						type="button"
+						className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white font-bold text-2xl"
+						onClick={toggleModal}
+					>
+						&times;
+					</button>
 					<div className="inline-block align-bottom rounded-t-lg bg-white px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-						<div className="flex items-center justify-between">
-							<h3
-								id="modal-title"
-								className="text-base font-medium text-gray-900"
-							>
+						<div className="text-center">
+							<h3 id="modal-title" className="font-bold text-3xl text-gray-900">
 								Character Information
 							</h3>
-							<button
-								type="button"
-								className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg focus:shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-								onClick={() =>
-									document.getElementById("modal")?.removeAttribute("style")
-								}
-							>
-								<span className="sr-only">Close</span>
-								<svg
-									className="h-6 w-6"
-									fill="none"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M6 12L2 6.58697L8.29389 3H14.5L19.7071 6.58697L16 12L19.7071 17.413L14.5 21H8.29389L2 15.413L5.29389 12L2 6.58697L8.29389 4H14.5L19.7071 0.586971L16 4L19.7071 7.413L14.5 11.5L8.29389 7.413L2 11.413L5.29389 12L2 16.5869L8.29389 18.5869L14.5 22.5L19.7071 18.5869L16 12L19.7071 15.413L14.5 19.5L8.29389 13.413Z"
-									/>
-								</svg>
-							</button>
 						</div>
 						<div className="mt-5">
 							<div className="grid grid-cols-1 gap-2">
-								{Object.entries(character).map(([key, value]) => (
-									<div
-										key={key}
-										className="text-base font-medium text-gray-900"
-									>
-										{(value && (key === "origin" || key === "location"))
-											? `${key.charAt(0).toUpperCase() + key.slice(1)}: ${
-													value.name
-											  }`
-											: `${
-													key.charAt(0).toUpperCase() + key.slice(1)
-											  }: ${value}`}
-									</div>
-								))}
-							</div>
-							<div className="mt-4">
-								<button
-									type="button"
-									className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									onClick={() => toggleModal()}
-								>
-									Close
-								</button>
+								{Object.entries(character).map(
+									([key, value]) =>
+										value &&
+										key !== "episode" &&
+										key !== "id" &&
+										key !== "image" &&
+										key !== "created" &&
+										key !== "url" && (
+											<div className="flex gap-2" key={key}>
+												<p className="text-base font-bold text-gray-900">
+													{key.charAt(0).toUpperCase() + key.slice(1)}:
+												</p>
+												{key === "origin" || key === "location" ? (
+													<span className="text-base font-normal text-gray-900 ">
+														{value.name}
+													</span>
+												) : (
+													<span className="text-gray-500">{value}</span>
+												)}
+											</div>
+										)
+								)}
 							</div>
 						</div>
 					</div>
